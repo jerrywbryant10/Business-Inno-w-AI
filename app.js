@@ -65,9 +65,6 @@ function render(data) {
   const bg = document.querySelector(".bg");
   bg.dataset.sky = `${scene(c.weather_code)}-${c.is_day ? "day" : "night"}`;
   bg.dataset.temp = c.temperature_2m >= 85 ? "hot" : c.temperature_2m <= 45 ? "cold" : "mild";
-  // The greeting sits on the sky itself, so its color follows how dark the sky is
-  const darkSky = !c.is_day || ["rain", "storm"].includes(scene(c.weather_code));
-  document.body.dataset.skyTone = darkSky ? "dark" : "light";
 
   $("temp").textContent = `${Math.round(c.temperature_2m)}°`;
   $("desc").textContent = now.label;

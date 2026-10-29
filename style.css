@@ -1,86 +1,60 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Neutral palette. Light is the default; dark applies when chosen, or via the OS when "System" is selected */
+/* Weather-colored skies with clear, sky-tinted glass and white text, like Apple Weather.
+   Light shows the sky as is; Dark deepens it. "System" follows the OS. */
 :root {
-  --sky:
-    radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.7) 0%, transparent 45%),
-    radial-gradient(circle at 85% 90%, rgba(120, 113, 108, 0.35) 0%, transparent 50%),
-    linear-gradient(165deg, #ecebe8, #c9c6c1);
-  --base: #dcdad6;
-  --text: #1c1b1a;
-  --glass: rgba(255, 255, 255, 0.58);
-  --glass-border: rgba(255, 255, 255, 0.7);
-  --line: rgba(28, 27, 26, 0.12);
-  --active: rgba(255, 255, 255, 0.85);
-  --bar-track: rgba(28, 27, 26, 0.12);
-  --bar: linear-gradient(90deg, #a8a29e, #44403c);
-  --shadow: rgba(0, 0, 0, 0.08);
+  --glass: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.22);
+  --line: rgba(255, 255, 255, 0.2);
+  --active: rgba(255, 255, 255, 0.3);
+  --dim: none;
 }
 :root[data-theme="dark"] {
-  --sky:
-    radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.08) 0%, transparent 45%),
-    radial-gradient(circle at 85% 90%, rgba(0, 0, 0, 0.5) 0%, transparent 50%),
-    linear-gradient(165deg, #2a2a2c, #121213);
-  --base: #1a1a1b;
-  --text: #f5f5f4;
-  --glass: rgba(20, 20, 22, 0.42);
-  --glass-border: rgba(255, 255, 255, 0.12);
-  --line: rgba(255, 255, 255, 0.12);
-  --active: rgba(255, 255, 255, 0.18);
-  --bar-track: rgba(255, 255, 255, 0.14);
-  --bar: linear-gradient(90deg, #78716c, #e7e5e4);
-  --shadow: rgba(0, 0, 0, 0.3);
+  --glass: rgba(0, 0, 0, 0.22);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --dim: brightness(0.6) saturate(1.1);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
-    --sky:
-      radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.08) 0%, transparent 45%),
-      radial-gradient(circle at 85% 90%, rgba(0, 0, 0, 0.5) 0%, transparent 50%),
-      linear-gradient(165deg, #2a2a2c, #121213);
-    --base: #1a1a1b;
-    --text: #f5f5f4;
-    --glass: rgba(20, 20, 22, 0.42);
-    --glass-border: rgba(255, 255, 255, 0.12);
-    --line: rgba(255, 255, 255, 0.12);
-    --active: rgba(255, 255, 255, 0.18);
-    --bar-track: rgba(255, 255, 255, 0.14);
-    --bar: linear-gradient(90deg, #78716c, #e7e5e4);
-    --shadow: rgba(0, 0, 0, 0.3);
+    --glass: rgba(0, 0, 0, 0.22);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --dim: brightness(0.6) saturate(1.1);
   }
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-  color: var(--text);
+  color: #fff;
   min-height: 100vh;
-  background: var(--base);
+  background: #1e5fae;
 }
 
 /* Background follows the live weather: app.js sets data-sky (condition + day/night)
-   and data-temp (hot/cold) on .bg. The neutral --sky shows until data loads. */
+   and data-temp (hot/cold) on .bg. A clear-day sky shows until data loads. */
 .bg {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: var(--sky);
+  background: linear-gradient(180deg, #1e64c8, #5aa6ee);
+  filter: var(--dim);
   transition: filter 0.6s;
 }
-.bg[data-sky="clear-day"]   { background: radial-gradient(circle at 80% 8%, rgba(255, 244, 214, 0.9) 0%, transparent 30%), linear-gradient(180deg, #3d7fc4, #8dbbe6); }
-.bg[data-sky="clear-night"] { background: radial-gradient(circle at 80% 10%, rgba(220, 225, 240, 0.25) 0%, transparent 18%), linear-gradient(180deg, #0b1120, #1f2a44); }
-.bg[data-sky="cloudy-day"]  { background: radial-gradient(ellipse at 30% 20%, rgba(255, 255, 255, 0.5) 0%, transparent 50%), linear-gradient(180deg, #7d8a99, #b7c0c9); }
-.bg[data-sky="cloudy-night"]{ background: linear-gradient(180deg, #1c2128, #383f48); }
-.bg[data-sky="fog-day"]     { background: linear-gradient(180deg, #a9adb1, #d5d6d6); }
-.bg[data-sky="fog-night"]   { background: linear-gradient(180deg, #2b2e31, #4a4d50); }
-.bg[data-sky="rain-day"]    { background: linear-gradient(180deg, #4b5866, #7f8b96); }
-.bg[data-sky="rain-night"]  { background: linear-gradient(180deg, #121820, #2a333d); }
-.bg[data-sky="snow-day"]    { background: linear-gradient(180deg, #a8b8c8, #e6ecf1); }
-.bg[data-sky="snow-night"]  { background: linear-gradient(180deg, #1d2633, #44505e); }
-.bg[data-sky="storm-day"]   { background: radial-gradient(ellipse at 50% 0%, rgba(120, 110, 160, 0.4) 0%, transparent 60%), linear-gradient(180deg, #262b36, #4a5160); }
-.bg[data-sky="storm-night"] { background: radial-gradient(ellipse at 50% 0%, rgba(90, 80, 140, 0.35) 0%, transparent 60%), linear-gradient(180deg, #0a0c12, #22262f); }
+.bg[data-sky="clear-day"]   { background: radial-gradient(circle at 80% 8%, rgba(255, 236, 180, 0.85) 0%, transparent 28%), linear-gradient(180deg, #1e64c8, #5aa6ee); }
+.bg[data-sky="clear-night"] { background: radial-gradient(circle at 80% 10%, rgba(220, 230, 255, 0.3) 0%, transparent 16%), linear-gradient(180deg, #08123a, #243a7a); }
+.bg[data-sky="cloudy-day"]  { background: radial-gradient(ellipse at 30% 15%, rgba(255, 255, 255, 0.35) 0%, transparent 55%), linear-gradient(180deg, #3d6a9c, #87a9cc); }
+.bg[data-sky="cloudy-night"]{ background: linear-gradient(180deg, #121d3a, #31446e); }
+.bg[data-sky="fog-day"]     { background: radial-gradient(ellipse at 50% 60%, rgba(255, 255, 255, 0.35) 0%, transparent 70%), linear-gradient(180deg, #5f86ab, #a9c2d8); }
+.bg[data-sky="fog-night"]   { background: linear-gradient(180deg, #1a2744, #435877); }
+.bg[data-sky="rain-day"]    { background: linear-gradient(180deg, #24496f, #5c82a8); }
+.bg[data-sky="rain-night"]  { background: linear-gradient(180deg, #0a1730, #22395e); }
+.bg[data-sky="snow-day"]    { background: linear-gradient(180deg, #3f78b8, #8fb3db); }
+.bg[data-sky="snow-night"]  { background: linear-gradient(180deg, #14244a, #3b5785); }
+.bg[data-sky="storm-day"]   { background: radial-gradient(ellipse at 50% 0%, rgba(140, 110, 210, 0.45) 0%, transparent 60%), linear-gradient(180deg, #1f2552, #46497e); }
+.bg[data-sky="storm-night"] { background: radial-gradient(ellipse at 50% 0%, rgba(110, 80, 190, 0.4) 0%, transparent 60%), linear-gradient(180deg, #080a22, #23264f); }
 
 /* Temperature tint */
 .bg::after { content: ""; position: absolute; inset: 0; pointer-events: none; }
-.bg[data-temp="hot"]::after  { background: linear-gradient(180deg, transparent 40%, rgba(240, 130, 50, 0.3)); }
+.bg[data-temp="hot"]::after  { background: radial-gradient(ellipse at 80% 0%, rgba(255, 170, 60, 0.5) 0%, transparent 55%); }
 .bg[data-temp="cold"]::after { background: linear-gradient(180deg, rgba(170, 210, 255, 0.3), transparent 60%); }
 
 /* Falling rain / snow */
@@ -106,10 +80,7 @@ body {
 }
 
 .topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
-.greeting { font-size: 22px; font-weight: 600; text-shadow: 0 1px 8px var(--shadow); }
-
-body[data-sky-tone="dark"] .greeting { color: #f5f5f4; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4); }
-body[data-sky-tone="light"] .greeting { color: #1c1b1a; text-shadow: 0 1px 8px rgba(255, 255, 255, 0.5); }
+.greeting { font-size: 22px; font-weight: 600; text-shadow: 0 1px 8px rgba(0, 0, 0, 0.25); }
 
 .glass.theme { display: flex; padding: 3px; border-radius: 12px; gap: 2px; }
 .theme button {
@@ -140,7 +111,8 @@ body[data-sky-tone="light"] .greeting { color: #1c1b1a; text-shadow: 0 1px 8px r
   border: 1px solid var(--glass-border);
   border-radius: 22px;
   padding: 16px;
-  box-shadow: 0 8px 32px var(--shadow);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
 h2 {
@@ -195,10 +167,10 @@ h2 {
 .range { display: flex; align-items: center; gap: 10px; }
 .range .lo { opacity: 0.65; width: 34px; text-align: right; }
 .range .hi { width: 34px; }
-.bar { flex: 1; height: 4px; border-radius: 2px; background: var(--bar-track); position: relative; }
+.bar { flex: 1; height: 4px; border-radius: 2px; background: rgba(0, 0, 0, 0.2); position: relative; }
 .bar span {
   position: absolute; top: 0; bottom: 0; border-radius: 2px;
-  background: var(--bar);
+  background: linear-gradient(90deg, #7dd3fc, #fde047, #fb923c);
 }
 
 .twoday { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
