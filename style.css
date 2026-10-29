@@ -161,6 +161,7 @@ body {
 
 .footer { text-align: center; color: var(--footer); font-size: 13px; display: flex; flex-direction: column; gap: 6px; }
 .footer a { color: #ff0; }
+.baby { align-self: center; image-rendering: pixelated; }
 .counter {
   font-family: "VT323", "Courier New", monospace;
   font-size: 20px;
