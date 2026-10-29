@@ -1,45 +1,57 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* Light is the default; dark applies when chosen, or via the OS when "System" is selected */
+/* Neutral palette. Light is the default; dark applies when chosen, or via the OS when "System" is selected */
 :root {
   --sky:
-    radial-gradient(circle at 20% 20%, #5aa9ff 0%, transparent 45%),
-    radial-gradient(circle at 80% 30%, #ff9a8b 0%, transparent 40%),
-    radial-gradient(circle at 50% 90%, #7b5cff 0%, transparent 50%),
-    linear-gradient(160deg, #5aa0e6, #2b6cb0);
-  --base: #2b6cb0;
-  --glass: rgba(255, 255, 255, 0.14);
-  --glass-border: rgba(255, 255, 255, 0.25);
-  --active: rgba(255, 255, 255, 0.35);
+    radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.7) 0%, transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(120, 113, 108, 0.35) 0%, transparent 50%),
+    linear-gradient(165deg, #ecebe8, #c9c6c1);
+  --base: #dcdad6;
+  --text: #1c1b1a;
+  --glass: rgba(255, 255, 255, 0.45);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --line: rgba(28, 27, 26, 0.12);
+  --active: rgba(255, 255, 255, 0.85);
+  --bar-track: rgba(28, 27, 26, 0.12);
+  --bar: linear-gradient(90deg, #a8a29e, #44403c);
+  --shadow: rgba(0, 0, 0, 0.08);
 }
 :root[data-theme="dark"] {
   --sky:
-    radial-gradient(circle at 20% 20%, #3b4a8f 0%, transparent 45%),
-    radial-gradient(circle at 80% 30%, #6b3fa0 0%, transparent 40%),
-    radial-gradient(circle at 50% 90%, #1e3a5f 0%, transparent 50%),
-    linear-gradient(160deg, #0f172a, #1e1b4b);
-  --base: #0f172a;
-  --glass: rgba(255, 255, 255, 0.08);
-  --glass-border: rgba(255, 255, 255, 0.14);
-  --active: rgba(255, 255, 255, 0.2);
+    radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(0, 0, 0, 0.5) 0%, transparent 50%),
+    linear-gradient(165deg, #2a2a2c, #121213);
+  --base: #1a1a1b;
+  --text: #f5f5f4;
+  --glass: rgba(255, 255, 255, 0.07);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --line: rgba(255, 255, 255, 0.12);
+  --active: rgba(255, 255, 255, 0.18);
+  --bar-track: rgba(255, 255, 255, 0.14);
+  --bar: linear-gradient(90deg, #78716c, #e7e5e4);
+  --shadow: rgba(0, 0, 0, 0.3);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
     --sky:
-      radial-gradient(circle at 20% 20%, #3b4a8f 0%, transparent 45%),
-      radial-gradient(circle at 80% 30%, #6b3fa0 0%, transparent 40%),
-      radial-gradient(circle at 50% 90%, #1e3a5f 0%, transparent 50%),
-      linear-gradient(160deg, #0f172a, #1e1b4b);
-    --base: #0f172a;
-    --glass: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.14);
-    --active: rgba(255, 255, 255, 0.2);
+      radial-gradient(circle at 15% 10%, rgba(255, 255, 255, 0.08) 0%, transparent 45%),
+      radial-gradient(circle at 85% 90%, rgba(0, 0, 0, 0.5) 0%, transparent 50%),
+      linear-gradient(165deg, #2a2a2c, #121213);
+    --base: #1a1a1b;
+    --text: #f5f5f4;
+    --glass: rgba(255, 255, 255, 0.07);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --line: rgba(255, 255, 255, 0.12);
+    --active: rgba(255, 255, 255, 0.18);
+    --bar-track: rgba(255, 255, 255, 0.14);
+    --bar: linear-gradient(90deg, #78716c, #e7e5e4);
+    --shadow: rgba(0, 0, 0, 0.3);
   }
 }
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, sans-serif;
-  color: #fff;
+  color: var(--text);
   min-height: 100vh;
   background: var(--base);
 }
@@ -58,7 +70,7 @@ body {
 .theme button {
   font: inherit;
   font-size: 13px;
-  color: #fff;
+  color: inherit;
   background: transparent;
   border: none;
   border-radius: 9px;
@@ -83,7 +95,7 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: 22px;
   padding: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 32px var(--shadow);
 }
 
 h2 {
@@ -94,7 +106,7 @@ h2 {
   opacity: 0.7;
   padding-bottom: 10px;
   margin-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid var(--line);
 }
 
 .search { padding: 0; border-radius: 14px; }
@@ -102,12 +114,12 @@ h2 {
   width: 100%;
   padding: 12px 16px;
   font-size: 16px;
-  color: #fff;
+  color: inherit;
   background: transparent;
   border: none;
   outline: none;
 }
-.search input::placeholder { color: rgba(255, 255, 255, 0.65); }
+.search input::placeholder { color: inherit; opacity: 0.55; }
 
 .current { text-align: center; padding: 28px 16px; }
 .current h1 { font-size: 32px; font-weight: 500; }
@@ -133,16 +145,25 @@ h2 {
   padding: 10px 0;
   font-size: 17px;
 }
-.day + .day { border-top: 1px solid rgba(255, 255, 255, 0.15); }
+.day + .day { border-top: 1px solid var(--line); }
 .day .icon { font-size: 22px; text-align: center; }
 .range { display: flex; align-items: center; gap: 10px; }
 .range .lo { opacity: 0.65; width: 34px; text-align: right; }
 .range .hi { width: 34px; }
-.bar { flex: 1; height: 4px; border-radius: 2px; background: rgba(255, 255, 255, 0.2); position: relative; }
+.bar { flex: 1; height: 4px; border-radius: 2px; background: var(--bar-track); position: relative; }
 .bar span {
   position: absolute; top: 0; bottom: 0; border-radius: 2px;
-  background: linear-gradient(90deg, #7dd3fc, #fde047, #fb923c);
+  background: var(--bar);
 }
+
+.twoday { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.twoday .card { display: flex; flex-direction: column; gap: 4px; }
+.twoday .name { font-weight: 600; font-size: 17px; }
+.twoday .icon { font-size: 34px; margin: 4px 0; }
+.twoday .hl { font-size: 22px; }
+.twoday .hl span { opacity: 0.6; }
+.twoday .meta { font-size: 14px; opacity: 0.75; }
+.twoday .card + .card { border-left: 1px solid var(--line); padding-left: 12px; }
 
 .details { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .tile p { font-size: 30px; font-weight: 400; }

@@ -32,7 +32,7 @@ async function loadWeather({ name, lat, lon }) {
     longitude: lon,
     current: "temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code,is_day",
     hourly: "temperature_2m,weather_code,is_day",
-    daily: "weather_code,temperature_2m_max,temperature_2m_min,uv_index_max",
+    daily: "weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_probability_max,wind_speed_10m_max,sunrise,sunset",
     temperature_unit: "fahrenheit",
     wind_speed_unit: "mph",
     timezone: "auto",
@@ -69,6 +69,23 @@ function render(data) {
       <span>${label}</span>
       <span class="icon">${describe(h.weather_code[j], h.is_day[j]).icon}</span>
       <span>${Math.round(h.temperature_2m[j])}°</span>
+    </div>`;
+  }).join("");
+
+  // Tomorrow and the day after, in more detail
+  const time = (iso) => new Date(iso).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+  $("twoday").innerHTML = [1, 2].map((i) => {
+    const w = describe(d.weather_code[i]);
+    const name = i === 1 ? "Tomorrow" : new Date(d.time[i] + "T00:00").toLocaleDateString([], { weekday: "long" });
+    return `<div class="card">
+      <span class="name">${name}</span>
+      <span class="icon">${w.icon}</span>
+      <span>${w.label}</span>
+      <span class="hl">${Math.round(d.temperature_2m_max[i])}° <span>/ ${Math.round(d.temperature_2m_min[i])}°</span></span>
+      <span class="meta">💧 ${d.precipitation_probability_max[i] ?? 0}% rain</span>
+      <span class="meta">💨 ${Math.round(d.wind_speed_10m_max[i])} mph</span>
+      <span class="meta">🌅 ${time(d.sunrise[i])}</span>
+      <span class="meta">🌇 ${time(d.sunset[i])}</span>
     </div>`;
   }).join("");
 
