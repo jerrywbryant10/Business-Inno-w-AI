@@ -52,7 +52,6 @@ function render(data) {
   const { current: c, hourly: h, daily: d } = data;
   const now = describe(c.weather_code, c.is_day);
 
-  document.body.classList.toggle("night", !c.is_day);
   $("temp").textContent = `${Math.round(c.temperature_2m)}°`;
   $("desc").textContent = now.label;
   $("hilo").textContent = `H:${Math.round(d.temperature_2m_max[0])}°  L:${Math.round(d.temperature_2m_min[0])}°`;
@@ -107,4 +106,23 @@ $("search").addEventListener("submit", async (e) => {
   loadWeather({ name: place.name, lat: place.latitude, lon: place.longitude });
 });
 
+function greet() {
+  const h = new Date().getHours();
+  const part = h < 12 ? "Good morning" : h < 18 ? "Good afternoon" : "Good evening";
+  $("greeting").textContent = `${part}, Jerry`;
+}
+
+function setTheme(theme) {
+  if (theme === "system") delete document.documentElement.dataset.theme;
+  else document.documentElement.dataset.theme = theme;
+  document.querySelectorAll(".theme button").forEach((b) => b.setAttribute("aria-pressed", b.dataset.theme === theme));
+  try { localStorage.setItem("theme", theme); } catch {}
+}
+
+document.querySelectorAll(".theme button").forEach((b) => b.addEventListener("click", () => setTheme(b.dataset.theme)));
+
+let savedTheme = "system";
+try { savedTheme = localStorage.getItem("theme") || "system"; } catch {}
+setTheme(savedTheme);
+greet();
 loadWeather(DEFAULT);
