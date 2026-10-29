@@ -125,13 +125,4 @@ let savedTheme = "system";
 try { savedTheme = localStorage.getItem("theme") || "system"; } catch {}
 setTheme(savedTheme);
 greet();
-
-// Retro hit counter: counts this browser's visits
-let visits = 1;
-try {
-  visits = Number(localStorage.getItem("visits") || 0) + 1;
-  localStorage.setItem("visits", visits);
-} catch {}
-$("counter").textContent = String(visits).padStart(4, "0");
-
 loadWeather(DEFAULT);
