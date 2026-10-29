@@ -185,5 +185,7 @@ h2 {
 .details { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .tile p { font-size: 30px; font-weight: 400; }
 
+.baby { display: block; width: 160px; height: 200px; margin: 8px auto -8px; }
+
 .credit { text-align: center; font-size: 12px; opacity: 0.6; }
 .credit a { color: inherit; }
