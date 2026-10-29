@@ -7,50 +7,64 @@
   <script>
     try { const t = localStorage.getItem("theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch {}
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=VT323&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="bg"></div>
-
   <main class="app">
-    <header class="topbar">
-      <div id="greeting" class="greeting">Hello, Jerry</div>
-      <div class="glass theme" role="group" aria-label="Theme">
-        <button type="button" data-theme="light">Light</button>
-        <button type="button" data-theme="dark">Dark</button>
-        <button type="button" data-theme="system">System</button>
+    <header class="win">
+      <div class="titlebar"><span>🌐 Welcome.exe</span><span class="controls" aria-hidden="true"><b>_</b><b>□</b><b>×</b></span></div>
+      <div class="body topbar">
+        <div id="greeting" class="greeting">Hello, Jerry</div>
+        <div class="theme" role="group" aria-label="Theme">
+          <button type="button" data-theme="light">Light</button>
+          <button type="button" data-theme="dark">Dark</button>
+          <button type="button" data-theme="system">System</button>
+        </div>
       </div>
     </header>
 
-    <form id="search" class="glass search" autocomplete="off">
-      <input id="query" type="text" placeholder="Search city" aria-label="Search city">
+    <div class="marquee" aria-hidden="true"><span>★ Welcome to Jerry's Weather Page ★ Best viewed in Netscape Navigator 3.0 at 800×600 ★ Live forecasts from Open-Meteo ★</span></div>
+
+    <form id="search" class="search" autocomplete="off">
+      <input id="query" type="text" placeholder="Search city…" aria-label="Search city">
+      <button type="submit">Go!</button>
     </form>
 
-    <section class="glass current">
-      <h1 id="city">Boca Raton</h1>
-      <div id="temp" class="temp">--°</div>
-      <div id="desc" class="desc">Loading…</div>
-      <div id="hilo" class="hilo"></div>
+    <section class="win">
+      <div class="titlebar"><span>☀️ Current Conditions</span><span class="controls" aria-hidden="true"><b>_</b><b>□</b><b>×</b></span></div>
+      <div class="body current">
+        <h1 id="city">Boca Raton</h1>
+        <div id="temp" class="temp">--°</div>
+        <div id="desc" class="desc">Loading…</div>
+        <div id="hilo" class="hilo"></div>
+      </div>
     </section>
 
-    <section class="glass">
-      <h2>Hourly Forecast</h2>
-      <div id="hourly" class="hourly"></div>
+    <section class="win">
+      <div class="titlebar"><span>🕒 Hourly Forecast</span><span class="controls" aria-hidden="true"><b>_</b><b>□</b><b>×</b></span></div>
+      <div class="body"><div id="hourly" class="hourly inset"></div></div>
     </section>
 
-    <section class="glass">
-      <h2>7-Day Forecast</h2>
-      <div id="daily" class="daily"></div>
+    <section class="win">
+      <div class="titlebar"><span>📅 7-Day Forecast</span><span class="controls" aria-hidden="true"><b>_</b><b>□</b><b>×</b></span></div>
+      <div class="body"><div id="daily" class="daily inset"></div></div>
     </section>
 
     <section class="details">
-      <div class="glass tile"><h2>Feels Like</h2><p id="feels">--</p></div>
-      <div class="glass tile"><h2>Humidity</h2><p id="humidity">--</p></div>
-      <div class="glass tile"><h2>Wind</h2><p id="wind">--</p></div>
-      <div class="glass tile"><h2>UV Index</h2><p id="uv">--</p></div>
+      <div class="win tile"><div class="titlebar"><span>Feels Like</span></div><div class="body"><p id="feels">--</p></div></div>
+      <div class="win tile"><div class="titlebar"><span>Humidity</span></div><div class="body"><p id="humidity">--</p></div></div>
+      <div class="win tile"><div class="titlebar"><span>Wind</span></div><div class="body"><p id="wind">--</p></div></div>
+      <div class="win tile"><div class="titlebar"><span>UV Index</span></div><div class="body"><p id="uv">--</p></div></div>
     </section>
 
-    <p class="credit">Data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></p>
+    <footer class="footer">
+      <div>Your visits: <span id="counter" class="counter">0000</span></div>
+      <div>🚧 This page is always under construction 🚧</div>
+      <div>Data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a></div>
+    </footer>
   </main>
 
   <script src="app.js"></script>
