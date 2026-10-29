@@ -66,6 +66,27 @@ const curl = mesh(new THREE.TorusGeometry(0.08, 0.03, 8, 20, Math.PI * 1.5), hai
 curl.rotation.y = Math.PI / 2;
 head.add(curl);
 
+// Sunglasses
+const rimMat = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.25, metalness: 0.6 });
+const lens = new THREE.MeshStandardMaterial({ color: 0x0b0b14, roughness: 0.05, metalness: 0.9 });
+const shades = new THREE.Group();
+shades.position.set(0, 0.07, 0);
+head.add(shades);
+for (const side of [-1, 1]) {
+  const rim = mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.05, 32), rimMat, side * 0.2, 0, 0.53);
+  rim.rotation.set(Math.PI / 2, 0, 0);
+  rim.rotation.order = "YXZ";
+  rim.rotation.y = side * 0.35;
+  shades.add(rim);
+  const glass = mesh(new THREE.CylinderGeometry(0.135, 0.135, 0.06, 32), lens, side * 0.2, 0, 0.535);
+  glass.rotation.copy(rim.rotation);
+  shades.add(glass);
+  const temple = mesh(new THREE.BoxGeometry(0.03, 0.03, 0.42), rimMat, side * 0.5, 0.02, 0.27);
+  temple.rotation.y = side * -0.25;
+  shades.add(temple);
+}
+shades.add(mesh(new THREE.BoxGeometry(0.12, 0.03, 0.03), rimMat, 0, 0.04, 0.58)); // bridge
+
 // Limbs pivot at the shoulder/hip so they can swing
 function limb(x, y, length, parent) {
   const pivot = new THREE.Group();
