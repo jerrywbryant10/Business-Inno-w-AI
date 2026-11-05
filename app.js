@@ -66,6 +66,10 @@ function render(data) {
   bg.dataset.sky = `${scene(c.weather_code)}-${c.is_day ? "day" : "night"}`;
   bg.dataset.temp = c.temperature_2m >= 85 ? "hot" : c.temperature_2m <= 45 ? "cold" : "mild";
 
+  // Lets the dancing babies dress for the weather
+  window.currentWeather = { code: c.weather_code, isDay: !!c.is_day, temp: c.temperature_2m };
+  window.dispatchEvent(new CustomEvent("weather", { detail: window.currentWeather }));
+
   $("temp").textContent = `${Math.round(c.temperature_2m)}°`;
   $("desc").textContent = now.label;
   $("hilo").textContent = `H:${Math.round(d.temperature_2m_max[0])}°  L:${Math.round(d.temperature_2m_min[0])}°`;
